@@ -11,6 +11,18 @@
 
 <body>
     <script>
+        let midi = null; // グローバルの MIDIAccess オブジェクト
+        function onMIDISuccess(midiAccess) {
+            console.log("MIDI の準備ができました！");
+            midi = midiAccess; // グローバル変数に保存する (実際の使用法では、オブジェクトインスタンスに格納するのがよいでしょう)
+        }
+
+        function onMIDIFailure(msg) {
+            console.error(`MIDI アクセスの取得に失敗しました - ${msg}`);
+        }
+
+        navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
+        
         function onMIDIMessage(event) {
             let str = `タイムスタンプ ${event.timeStamp} に受信した MIDI メッセージ [${event.data.length} バイト]: `;
             for (const character of event.data) {
