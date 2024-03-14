@@ -74,7 +74,7 @@
 <body>
     <div id="inputs"></div>
     <div id="outputs"></div>
-    <div id="messages"></div>
+    <div id="messages">0</div>
     <script>
 
         var MIDI = function () {
@@ -146,13 +146,11 @@
             })
             .start();
 
+            num = 0;
 
-
-        function addList(list, msg) {
-            var li = document.createElement("div");
-            li.classList.add("item");
-            li.innerHTML = msg;
-            list.appendChild(li);
+        function addList() {
+            num += 0.5;
+            console.log(num)
         }
 
         function deleteList(list) {
@@ -169,7 +167,7 @@
                     if (messages.children.length > 11) {
                         deleteList(messages);
                     }
-                    addList(messages, data[0] + " " + data[1] + " " + data[2]);
+                    addList();
                 }
             });
         }
