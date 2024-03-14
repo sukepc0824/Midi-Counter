@@ -21,8 +21,28 @@
             console.error(`MIDI アクセスの取得に失敗しました - ${msg}`);
         }
 
+        function listInputsAndOutputs(midiAccess) {
+            for (const entry of midiAccess.inputs) {
+                const input = entry[1];
+                console.log(
+                    `入力ポート [type:'${input.type}']` +
+                    ` id:'${input.id}'` +
+                    ` manufacturer:'${input.manufacturer}'` +
+                    ` name:'${input.name}'` +
+                    ` version:'${input.version}'`,
+                );
+            }
+
+            for (const entry of midiAccess.outputs) {
+                const output = entry[1];
+                console.log(
+                    `出力ポート [type:'${output.type}'] id:'${output.id}' manufacturer:'${output.manufacturer}' name:'${output.name}' version:'${output.version}'`,
+                );
+            }
+        }
+
         navigator.requestMIDIAccess().then(onMIDISuccess, onMIDIFailure);
-        
+
         function onMIDIMessage(event) {
             let str = `タイムスタンプ ${event.timeStamp} に受信した MIDI メッセージ [${event.data.length} バイト]: `;
             for (const character of event.data) {
